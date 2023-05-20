@@ -28,6 +28,15 @@ FiberPunk_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 unsigned long previousMillis = 0;
 unsigned long interval = 30000;
 
+//Timing for screen saver
+#define EXE_INTERVAL 1000            //delay time in milli seconds(1000 = 1seconds)
+#define SCREENSAVER_INTERVAL 60       //Screen Saver delay time in seconds
+unsigned long lastExecutedMillis = 0; // variable to save the last executed time
+unsigned long currentMillis;
+int ScreenSaverCounter = 0;
+int ScreenSaverX = 0;
+int ScreenSaverY = 0;
+bool ScreenSaverFlag = false;       //flag to check if screen saver is running and for how long, or not.
 
 uint8_t lastPowerOffPrinting()
 {
@@ -126,28 +135,30 @@ void cameraTrigger()
 
 void messageDisplay(String content)
 {
-    display.clearDisplay();
-    display.display();
-   // text display tests
-    display.setTextSize(1);
-    display.setCursor(0,8);
-    display.print(content);
-    display.display(); // actually display all of the above  
-  
+    if (!ScreenSaverFlag){
+        display.clearDisplay();
+        display.display();
+    // text display tests
+        display.setTextSize(1);
+        display.setCursor(0,8);
+        display.print(content);
+        display.display(); // actually display all of the above  
+    }
 }
 void pageDisplayIP(String ip,String content)
 {
-    display.clearDisplay();
-    display.display();
-    display.setTextSize(1);
-    display.setCursor(0,0);
-    display.print("Name:");
-    display.println(cf_node_name);
-    display.print("IP:");
-    display.println(ip);
-    display.println(content);
-    display.display(); // actually display all of the above 
-    
+    if (!ScreenSaverFlag){
+        display.clearDisplay();
+        display.display();
+        display.setTextSize(1);
+        display.setCursor(0,0);
+        display.print("Name:");
+        display.println(cf_node_name);
+        display.print("IP:");
+        display.println(ip);
+        display.println(content);
+        display.display(); // actually display all of the above 
+    }
 }
 void pageDisplay(String content)
 {
@@ -163,7 +174,21 @@ void pageDisplay(String content)
     display.println(WiFi.localIP());
     display.println(content);
     display.display(); // actually display all of the above 
-    
+}
+
+void ScreenSaver(){
+    display.clearDisplay();
+    display.display();
+    if (!ScreenSaverY){
+        ScreenSaverX = random(0, 128);
+    }
+    display.setTextSize(1);
+    display.setCursor(ScreenSaverX,ScreenSaverY++);
+    display.print("Y");
+    display.display();
+    if (ScreenSaverY >= 32){
+        ScreenSaverY = 0;
+    }
 }
 
 WifiNode::WifiNode()
@@ -302,7 +327,8 @@ void WifiNode::init()
     pinMode(18, OUTPUT);
 
     //ap mode pin
-    pinMode(23, INPUT_PULLUP);
+    // pinMode(23, INPUT_PULLUP);
+    pinMode(PushButton, INPUT_PULLUP);
     
 
     //SD switcher
@@ -585,6 +611,7 @@ void WifiNode::process()
     }
     if(pre_usb_status!=current_usb_status)
     {
+        ScreenSaverCounter = 0;
         if(current_usb_status)//connected
         {
             pageDisplay("Printer Connected!");
@@ -599,5 +626,19 @@ void WifiNode::process()
         }
         
         pre_usb_status = current_usb_status;
+    }
+      /* Screen saver interval*/
+    currentMillis = millis();
+    if ((currentMillis - lastExecutedMillis) >= EXE_INTERVAL ) {  
+         lastExecutedMillis = currentMillis; // save the last executed time
+        if(++ScreenSaverCounter >= SCREENSAVER_INTERVAL){
+            ScreenSaver();
+        }
+    }
+    if ( !digitalRead (PushButton)){
+        ScreenSaverCounter = 0;
+        pageDisplay("Exit ScreenSaver");
+        Serial.println(F("Exit ScreenSaver"));
+        delay(100);                         // debounce
     }
 }

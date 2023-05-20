@@ -1520,7 +1520,7 @@ void apModeDetect()
 {
     if(digitalRead(23)==LOW)
     {
-      delay(500);
+      delay(1000);
       if(digitalRead(23)==LOW)
       {
         writeLog("AP mode pressed");
@@ -1544,7 +1544,7 @@ void ServerProcess::serverLoop()
       print_start_flag = 0;
       printStartInstance();
     }
-    apModeDetect();
+    apModeDetect();  
     checkLEDstatus();
     if (g_status==PRINTING)
     {

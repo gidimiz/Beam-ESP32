@@ -28,7 +28,7 @@
 #define MB(V) (V==FMTYPE)
 
 #if MB(MARLIN_VER)
-  #define VERSION "2023-04-20-2010-beta-0.1"
+  #define VERSION "2023-05-20-2010-beta-0.1"
 #elif MB(PRUSA_VER)
   #define VERSION "2023-04-20-2010-PRUSA-MK3S-beta-0.2"
 #endif
@@ -38,6 +38,7 @@
 #define RED_LED 26
 #define GREEN_LED 25
 #define BLUE_LED 27
+#define PushButton 23
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 32 // OLED display height, in pixels
