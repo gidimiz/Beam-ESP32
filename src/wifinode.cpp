@@ -36,7 +36,6 @@ unsigned long currentMillis;
 int ScreenSaverCounter = 0;
 int ScreenSaverX = 0;
 int ScreenSaverY = 0;
-bool ScreenSaverFlag = false;       //flag to check if screen saver is running and for how long, or not.
 
 uint8_t lastPowerOffPrinting()
 {
@@ -135,30 +134,26 @@ void cameraTrigger()
 
 void messageDisplay(String content)
 {
-    if (!ScreenSaverFlag){
-        display.clearDisplay();
-        display.display();
-    // text display tests
-        display.setTextSize(1);
-        display.setCursor(0,8);
-        display.print(content);
-        display.display(); // actually display all of the above  
-    }
+    display.clearDisplay();
+    display.display();
+// text display tests
+    display.setTextSize(1);
+    display.setCursor(0,8);
+    display.print(content);
+    display.display(); // actually display all of the above  
 }
 void pageDisplayIP(String ip,String content)
 {
-    if (!ScreenSaverFlag){
-        display.clearDisplay();
-        display.display();
-        display.setTextSize(1);
-        display.setCursor(0,0);
-        display.print("Name:");
-        display.println(cf_node_name);
-        display.print("IP:");
-        display.println(ip);
-        display.println(content);
-        display.display(); // actually display all of the above 
-    }
+    display.clearDisplay();
+    display.display();
+    display.setTextSize(1);
+    display.setCursor(0,0);
+    display.print("Name:");
+    display.println(cf_node_name);
+    display.print("IP:");
+    display.println(ip);
+    display.println(content);
+    display.display(); // actually display all of the above 
 }
 void pageDisplay(String content)
 {
@@ -603,6 +598,7 @@ void WifiNode::process()
     checkwifi();
     if(reset_sd_usb)
     {
+        ScreenSaverCounter = 0;
         resetUsbHostInstance();
         // espReleaseSD();
         // delay(50);
@@ -638,7 +634,6 @@ void WifiNode::process()
     if ( !digitalRead (PushButton)){
         ScreenSaverCounter = 0;
         pageDisplay("Exit ScreenSaver");
-        Serial.println(F("Exit ScreenSaver"));
         delay(100);                         // debounce
     }
 }
