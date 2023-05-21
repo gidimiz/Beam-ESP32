@@ -39,7 +39,8 @@
 #define GREEN_LED 25
 #define BLUE_LED 27
 #define PushButton 23     // Push button for wakeup
-#define POWER_PIN 32      // On/Off power control for the printer
+#define POWER_PIN 17      // On/Off power control for the printer using TXD2 pin
+//#define Spare_Pin 16          // spare pin using RXD2 pin
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 32 // OLED display height, in pixels

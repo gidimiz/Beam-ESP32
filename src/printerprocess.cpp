@@ -136,7 +136,7 @@ void readPrinterBack()
         } 
         if(inData.indexOf("@Capture")!=-1)
         {
-          Serial2.print("#%");
+          //Serial2.print("#%");
           String capture_cmd = cf_node_name+"@TakeImg";
           sendCaptureImage(capture_cmd);
         }

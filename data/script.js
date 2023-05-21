@@ -941,13 +941,6 @@ cleanEEPROMButton.onclick = () => {
 };
 
 // On/Off printer button
-// superPowersButton .onclick = () => {
-//   var tt_url = '/superPowers';
-//   xmlHttp = new XMLHttpRequest();
-//   xmlHttp.open('GET', tt_url);
-//   xmlHttp.send();
-// };
-//var superPowersButton = document.getElementById('btn-superPowers');
 var isOn = false; // Initial state
 
 superPowersButton.onclick = function() {

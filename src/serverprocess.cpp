@@ -939,14 +939,12 @@ void superPOWERS(AsyncWebServerRequest * request)
   if ( digitalRead(POWER_PIN) == LOW )
   {
     digitalWrite(POWER_PIN, HIGH);
-    request->send(200, "text/plain","ok");
-    Serial.println("Printer On");
+    request->send(500, "text/plain","Printer powered on");
   }
   else
   {
     digitalWrite(POWER_PIN, LOW);
-    request->send(200, "text/plain","ok");
-    Serial.println("Printer Off");
+    request->send(200, "text/plain","Printer powered off");
   }
 
 }

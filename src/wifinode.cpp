@@ -270,7 +270,7 @@ void WifiNode::init()
 	EEPROM.begin(256);
     //0.初始化串口和OLED屏
     PRINTER_PORT.begin(115200);
-    Serial2.begin(115200);
+    //Serial2.begin(115200);        //Serial2 is disabled as TX and RX are used for Power Control and spare pin
     PRINTER_PORT.setTimeout(120);
     PRINTER_PORT.setRxBufferSize(512);
     PRINTER_PORT.setDebugOutput(true);
