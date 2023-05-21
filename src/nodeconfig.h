@@ -38,7 +38,8 @@
 #define RED_LED 26
 #define GREEN_LED 25
 #define BLUE_LED 27
-#define PushButton 23
+#define PushButton 23     // Push button for wakeup
+#define POWER_PIN 32      // On/Off power control for the printer
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 32 // OLED display height, in pixels

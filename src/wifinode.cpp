@@ -178,7 +178,8 @@ void ScreenSaver(){
         ScreenSaverX = random(0, 128);
     }
     display.setTextSize(1);
-    display.setCursor(ScreenSaverX,ScreenSaverY++);
+    display.setCursor(ScreenSaverX,(ScreenSaverY));
+    ScreenSaverY = ScreenSaverY + 2;
     display.print("Y");
     display.display();
     if (ScreenSaverY >= 32){
@@ -325,6 +326,10 @@ void WifiNode::init()
     // pinMode(23, INPUT_PULLUP);
     pinMode(PushButton, INPUT_PULLUP);
     
+    //power off pin
+    pinMode(POWER_PIN, OUTPUT);
+    digitalWrite(POWER_PIN, LOW);
+
 
     //SD switcher
     if(last_power_status)

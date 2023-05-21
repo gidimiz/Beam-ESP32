@@ -934,6 +934,23 @@ void printStart(AsyncWebServerRequest * request)
   
 }
 
+void superPOWERS(AsyncWebServerRequest * request)
+{
+  if ( digitalRead(POWER_PIN) == LOW )
+  {
+    digitalWrite(POWER_PIN, HIGH);
+    request->send(200, "text/plain","ok");
+    Serial.println("Printer On");
+  }
+  else
+  {
+    digitalWrite(POWER_PIN, LOW);
+    request->send(200, "text/plain","ok");
+    Serial.println("Printer Off");
+  }
+
+}
+
 #if MB(PRUSA_VER)
   String savePaincFileName(String filename)
   {
@@ -1181,6 +1198,8 @@ void ServerProcess::serverInit()
     
     server.on("/cleaneeprom", HTTP_GET, cleanEEPROM);
     server.on("/getfmdname", HTTP_GET, getFMDBtnName);
+    
+    server.on("/superPowers", HTTP_GET, superPOWERS);
 
     server.on("/user1", HTTP_GET, user1Btn);
     server.on("/user2", HTTP_GET, user2Btn);

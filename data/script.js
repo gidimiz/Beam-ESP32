@@ -731,6 +731,7 @@ const restartButton = document.getElementById('btn-restart');
 const resethostButton = document.getElementById('btn-resethost');
 const setSPIButton = document.getElementById('btn-setspi');
 const setSDIOButton = document.getElementById('btn-setsdio');
+const superPowersButton = document.getElementById('btn-superPowers');
 
 const setSDInitWithButton = document.getElementById('btn-with-sd');
 const setSDInitWithoutButton = document.getElementById('btn-without-sd');
@@ -937,6 +938,41 @@ cleanEEPROMButton.onclick = () => {
   xmlHttp = new XMLHttpRequest();
   xmlHttp.open('GET', tt_url);
   xmlHttp.send();
+};
+
+// On/Off printer button
+// superPowersButton .onclick = () => {
+//   var tt_url = '/superPowers';
+//   xmlHttp = new XMLHttpRequest();
+//   xmlHttp.open('GET', tt_url);
+//   xmlHttp.send();
+// };
+//var superPowersButton = document.getElementById('btn-superPowers');
+var isOn = false; // Initial state
+
+superPowersButton.onclick = function() {
+    if (isOn) {
+        // If the printer is currently on, show a confirmation dialog
+        if (confirm('Are you sure you want to turn off the printer?')) {
+            this.textContent = 'Turn On Printer';
+            isOn = false;
+
+            // Code to turn off the printer
+            var tt_url = '/superPowers';
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open('GET', tt_url);
+            xmlHttp.send();
+        }
+    } else {
+        this.textContent = 'Turn Off Printer';
+        isOn = true;
+
+        // Code to turn on the printer
+        var tt_url = '/superPowers';
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open('GET', tt_url);
+        xmlHttp.send();
+    }
 };
 
 
